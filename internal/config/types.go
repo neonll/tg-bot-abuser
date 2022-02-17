@@ -7,4 +7,12 @@ const (
 	MUTE PenaltyType = "mute"
 )
 
-var AllPenaltyTypes = []PenaltyType{KICK, MUTE}
+type Period string
+
+const (
+	MINUTE Period = "minute"
+	HOUR   Period = "hour"
+	DAY    Period = "day"
+)
+
+var AllPeriods = []Period{MINUTE, HOUR, DAY}

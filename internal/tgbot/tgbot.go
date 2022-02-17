@@ -66,23 +66,6 @@ func doSomething(update Update, bot BotAPI) {
 			}
 		}
 	}
-
-	//
-	//msg := SetChatPermissionsConfig{
-	//	ChatConfig: ChatConfig{
-	//		ChatID: update.FromChat().ID,
-	//	},
-	//	Permissions: &restrictAll,
-	//}
-
-	// Okay, we're sending our message off! We don't care about the message
-	// we just sent, so we'll discard it.
-	//if _, err := bot.Send(msg); err != nil {
-	//	// Note that panics are a bad way to handle errors. Telegram can
-	//	// have service outages or network errors, you should retry sending
-	//	// messages or more gracefully handle failures.
-	//	panic(err)
-	//}
 }
 
 func int64SliceContains(s []int64, e int64) bool {

@@ -7,29 +7,28 @@ import (
 	"log"
 )
 
-var BotToken string
-var BotDebug bool
-
-var BotTimeout int
-
-var ActivePenalties []string
-
-var ManagedChats []int64
-
-var ManagedUser int64
-
-var Limits, Penalties, Thresholds map[PenaltyType]map[Period]int
-
-var RestrictAll = tgbotapi.ChatPermissions{
-	CanSendMessages:       false,
-	CanSendMediaMessages:  false,
-	CanSendPolls:          false,
-	CanSendOtherMessages:  false,
-	CanAddWebPagePreviews: false,
-	CanChangeInfo:         false,
-	CanInviteUsers:        false,
-	CanPinMessages:        false,
-}
+var (
+	configPath      = "config.yaml"
+	BotToken        string
+	BotDebug        bool
+	BotTimeout      int
+	ActivePenalties []string
+	ManagedChats    []int64
+	ManagedUser     int64
+	Penalties       map[PenaltyType]map[Period]int
+	Thresholds      map[PenaltyType]map[Period]int
+	Limits          map[PenaltyType]map[Period]int
+	RestrictAll     = tgbotapi.ChatPermissions{
+		CanSendMessages:       false,
+		CanSendMediaMessages:  false,
+		CanSendPolls:          false,
+		CanSendOtherMessages:  false,
+		CanAddWebPagePreviews: false,
+		CanChangeInfo:         false,
+		CanInviteUsers:        false,
+		CanPinMessages:        false,
+	}
+)
 
 func ReadConfig() {
 	type schema struct {
@@ -50,7 +49,7 @@ func ReadConfig() {
 
 	t := schema{}
 
-	configBytes, err := ioutil.ReadFile("config.yaml")
+	configBytes, err := ioutil.ReadFile(configPath)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}

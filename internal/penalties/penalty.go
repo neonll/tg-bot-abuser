@@ -12,20 +12,20 @@ import (
 func Fire(action string, update tgbotapi.Update) []tgbotapi.Chattable {
 	switch action {
 	case "kick":
-		return check(config.KICK, update)
+		return getActions(config.KICK, update)
 	case "mute":
-		return check(config.MUTE, update)
+		return getActions(config.MUTE, update)
 	default:
 		return nil
 	}
 }
 
-func check(action config.PenaltyType, update tgbotapi.Update) []tgbotapi.Chattable {
+func getActions(action config.PenaltyType, update tgbotapi.Update) []tgbotapi.Chattable {
 	result := make([]tgbotapi.Chattable, 0)
 	hour := update.Message.Time().Hour()
 	minute := update.Message.Time().Minute()
 
-	for _, period := range config.All {
+	for _, period := range config.AllPeriods {
 		count := stats.GetCount(period, hour, minute)
 		limit := config.Limits[action][period]
 		if count >= limit {
