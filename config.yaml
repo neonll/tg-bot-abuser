@@ -35,3 +35,7 @@ penalties:
       day: 1440
       hour: 60
       minute: 5
+cron:
+  statsClear:
+    expression: "0 10 * * *"
+    timezone: "Europe/Moscow"

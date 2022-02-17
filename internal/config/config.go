@@ -28,6 +28,8 @@ var (
 		CanInviteUsers:        false,
 		CanPinMessages:        false,
 	}
+	StatsClearCron     string
+	StatsClearTimezone string
 )
 
 func ReadConfig() {
@@ -45,6 +47,12 @@ func ReadConfig() {
 		Limits     map[PenaltyType]map[Period]int `yaml:"limits"`
 		Thresholds map[PenaltyType]map[Period]int `yaml:"thresholds"`
 		Penalties  map[PenaltyType]map[Period]int `yaml:"penalties"`
+		Cron       struct {
+			StatsClear struct {
+				Expression string `yaml:"expression"`
+				Timezone   string `yaml:"timezone"`
+			} `yaml:"statsClear"`
+		} `yaml:"cron"`
 	}
 
 	t := schema{}
@@ -71,5 +79,8 @@ func ReadConfig() {
 	Limits = t.Limits
 	Thresholds = t.Thresholds
 	Penalties = t.Penalties
+
+	StatsClearCron = t.Cron.StatsClear.Expression
+	StatsClearTimezone = t.Cron.StatsClear.Timezone
 
 }

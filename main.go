@@ -8,6 +8,6 @@ import (
 
 func main() {
 	config.ReadConfig()
-	stats.Clear()
+	go stats.ScheduleClear()
 	tgbot.Run()
 }

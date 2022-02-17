@@ -2,6 +2,9 @@ package stats
 
 import (
 	"elisBot/internal/config"
+	"github.com/robfig/cron/v3"
+	"log"
+	"time"
 )
 
 var messagesCount [24][60]int
@@ -43,10 +46,24 @@ func getDayCount() int {
 	return sum
 }
 
-func Clear() {
+func clear() {
 	for i := 0; i < len(messagesCount); i++ {
 		for j := 0; j < len(messagesCount[i]); j++ {
 			messagesCount[i][j] = 0
 		}
 	}
+}
+
+func ScheduleClear() {
+	mow, err := time.LoadLocation(config.StatsClearTimezone)
+	if err != nil {
+		log.Panic(err)
+	}
+	c := cron.New(cron.WithLocation(mow))
+	_, err = c.AddFunc(config.StatsClearCron, clear)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	c.Run()
 }
