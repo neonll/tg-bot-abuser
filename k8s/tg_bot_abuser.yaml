@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tg-bot-abuser
+  labels:
+    app: tg-bot-abuser
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tg-bot-abuser
+  template:
+    metadata:
+      labels:
+        app: tg-bot-abuser
+    spec:
+      containers:
+        - name: tg-bot-abuser
+          image: localhost:32000/tg_bot_abuser:latest
+          volumeMounts:
+            - name: config-volume
+              mountPath: /conf/config.yaml
+              subPath: config.yaml
+      volumes:
+        - name: config-volume
+          configMap:
+            name: tg-bot-abuser-conf
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tg-bot-abuser-conf
+data:
+  config.yaml: |
+    bot:
+      token: ""
+      debug: true
+      timeout: 30
+    activePenalties:
+      - mute
+    managed:
+      chats:
+        - -100154
+      user: 204
+    limits:
+      kick:
+          day: 1000
+          hour: 20
+          minute: 5
+      mute:
+          day: 1000
+          hour: 40
+          minute: 5
+    thresholds:
+      kick:
+          day: 100
+          hour: 5
+          minute: 2
+      mute:
+          day: 100
+          hour: 5
+          minute: 2
+    penalties:
+      kick:
+          day: 1440
+          hour: 60
+          minute: 5
+      mute:
+          day: 1440
+          hour: 60
+          minute: 5
+    cron:
+      statsClear:
+        expression: "0 10 * * *"
+        timezone: "Europe/Moscow" 
