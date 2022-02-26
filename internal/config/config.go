@@ -5,6 +5,7 @@ import (
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"log"
+	"os"
 )
 
 var (
@@ -33,6 +34,10 @@ var (
 )
 
 func ReadConfig() {
+	if len(os.Args) > 1 {
+		configPath = os.Args[1]
+	}
+
 	type schema struct {
 		Bot struct {
 			Token   string `yaml:"token"`
